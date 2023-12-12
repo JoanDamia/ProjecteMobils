@@ -13,7 +13,7 @@ class TreasureList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(treasure.name),
-      subtitle: Text(treasure.id as String),
+      subtitle: Text((treasure.id).toString()),
       leading: Image(
         image: NetworkImage(treasure.image),
       ),

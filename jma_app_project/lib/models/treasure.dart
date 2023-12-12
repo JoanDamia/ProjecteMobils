@@ -1,18 +1,17 @@
 class Treasure {
   String name;
   String image;
-  List<String> drops;
+  //String description;
+  //String category;
   int id;
-  String description;
-  String location;
-  String category;
+  // List<dynamic> drops, location;
 
   Treasure.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         image = json["image"],
-        drops = json["drops"],
-        id = json["id"],
-        description = json["description"],
-        location = json["common_locations"],
-        category = json["category"];
+        //drops = json["drops"],
+        id = json["id"];
+  //description = json["description"],
+  //location = json["common_locations"],
+  //category = json["category"];
 }

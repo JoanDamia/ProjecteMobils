@@ -8,11 +8,11 @@ Future<List<Treasure>> apiLoadUsers() async {
       Uri.parse("https://botw-compendium.herokuapp.com/api/v3/compendium/all");
   final response = await http.get(uri);
   final json = jsonDecode(response.body);
-  final jsonUserList = json["data"];
-  final List<Treasure> userList = [];
-  for (final jsonUser in jsonUserList) {
-    final user = Treasure.fromJson(jsonUser);
-    userList.add(user);
+  final jsonTreasureList = json["data"];
+  final List<Treasure> treasureList = [];
+  for (final jsonTreasure in jsonTreasureList) {
+    final user = Treasure.fromJson(jsonTreasure);
+    treasureList.add(user);
   }
-  return userList;
+  return treasureList;
 }
