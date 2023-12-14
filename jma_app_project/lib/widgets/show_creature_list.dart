@@ -9,7 +9,7 @@ class ShowCreatureList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: apiLoadMonsters(),
+      future: apiLoadCreatures(),
       builder: (
         BuildContext context,
         AsyncSnapshot<List<Creature>> snapshot,
