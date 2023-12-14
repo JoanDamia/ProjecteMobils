@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jma_app_project/widgets/show_creature_list.dart';
 import 'package:jma_app_project/widgets/show_monster_list.dart';
 import 'package:jma_app_project/widgets/show_treasure_list.dart';
 
@@ -11,7 +12,7 @@ class tab_bar extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
-        length: 4,
+        length: 5,
         child: Scaffold(
           appBar: AppBar(
             bottom: const TabBar(
@@ -20,6 +21,7 @@ class tab_bar extends StatelessWidget {
                 Tab(icon: Icon(Icons.catching_pokemon)),
                 Tab(icon: Icon(Icons.shield)),
                 Tab(icon: Icon(Icons.donut_large)),
+                Tab(icon: Icon(Icons.access_alarm_outlined)),
               ],
             ),
           ),
@@ -27,8 +29,9 @@ class tab_bar extends StatelessWidget {
             children: [
               ShowTreasureList(),
               ShowMonsterList(),
+              ShowCreatureList(),
               ShowTreasureList(),
-              ShowTreasureList(),
+              ShowCreatureList(),
             ],
           ),
         ),
