@@ -3,8 +3,8 @@ import 'package:jma_app_project/api_routes/treasure_api.dart';
 import 'package:jma_app_project/models/treasure.dart';
 import 'package:jma_app_project/widgets/treasure_list.dart';
 
-class ShowList extends StatelessWidget {
-  const ShowList({super.key});
+class ShowTreasureList extends StatelessWidget {
+  const ShowTreasureList({super.key});
 
   @override
   Widget build(BuildContext context) {
