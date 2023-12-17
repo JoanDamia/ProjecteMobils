@@ -5,14 +5,15 @@ import 'package:jma_app_project/widgets/show_materials_list.dart';
 import 'package:jma_app_project/widgets/show_monster_list.dart';
 import 'package:jma_app_project/widgets/show_treasure_list.dart';
 
-class tab_bar extends StatelessWidget {
-  const tab_bar({
+class ConpendiumTabBar extends StatelessWidget {
+  const ConpendiumTabBar({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: DefaultTabController(
         length: 5,
         child: Scaffold(

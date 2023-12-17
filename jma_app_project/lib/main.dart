@@ -1,4 +1,5 @@
-import 'package:jma_app_project/screens/main_screen.dart';
+import 'package:jma_app_project/screens/conpendium_screen.dart';
+import 'package:jma_app_project/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,8 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       routes: {
-        "/": (context) => const MainScreen(),
+        "/": (context) => const HomeScreen(),
+        "/ConpendiumScreen": (context) => const ConpendiumScreen(),
       },
     );
   }
