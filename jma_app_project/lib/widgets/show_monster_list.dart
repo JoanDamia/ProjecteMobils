@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:jma_app_project/api_routes/monster_api.dart';
 import 'package:jma_app_project/models/monster.dart';
-import 'package:jma_app_project/widgets/monster_list.dart';
+
+class MonsterList extends StatelessWidget {
+  const MonsterList({
+    super.key,
+    required this.monster,
+  });
+
+  final Monster monster;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(monster.name),
+      subtitle: Text((monster.id).toString()),
+      leading: Image(
+        image: NetworkImage(monster.image),
+      ),
+    );
+  }
+}
 
 class ShowMonsterList extends StatelessWidget {
   const ShowMonsterList({super.key});

@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:jma_app_project/api_routes/treasure_api.dart';
 import 'package:jma_app_project/models/treasure.dart';
-import 'package:jma_app_project/widgets/treasure_list.dart';
+
+class TreasureList extends StatelessWidget {
+  const TreasureList({
+    super.key,
+    required this.treasure,
+  });
+
+  final Treasure treasure;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(treasure.name),
+      subtitle: Text((treasure.id).toString()),
+      leading: Image(
+        image: NetworkImage(treasure.image),
+      ),
+    );
+  }
+}
 
 class ShowTreasureList extends StatelessWidget {
   const ShowTreasureList({super.key});
