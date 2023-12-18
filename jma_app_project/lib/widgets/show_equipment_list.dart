@@ -18,6 +18,69 @@ class EquipmentList extends StatelessWidget {
       leading: Image(
         image: NetworkImage(equipment.image),
       ),
+      onTap: () {
+        showDialog<void>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(10),
+                          child: Text(
+                            equipment.name,
+                            textAlign: TextAlign.left,
+                            style: const TextStyle(
+                              fontSize: 22,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            width: 100,
+                          ),
+                        ),
+                        FloatingActionButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          elevation: 0,
+                          backgroundColor: Colors.white,
+                          mini: true,
+                          child: Icon(Icons.close, color: Colors.grey[700]),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: SizedBox(
+                          width: 250,
+                          height: 250,
+                          child: Image(image: NetworkImage(equipment.image)),
+                        )),
+                        Expanded(
+                            child: Container(
+                          margin: const EdgeInsets.all(10),
+                          child: Text(
+                            equipment.description,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ))
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
