@@ -1,22 +1,17 @@
-class Materials {
-  String name;
-  String image;
-  String description;
+import 'game_element.dart';
+
+class Materials extends GameElement {
   //String category;
   //String cooking_effect;
   //float hearts_recovered;
-
-  int id;
   // List<dynamic> drops, location;
 
   Materials.fromJson(Map<String, dynamic> json)
-      : name = json["name"],
-        image = json["image"],
-        id = json["id"],
-        description = json["description"];
-  //location = json["common_locations"],
-  //category = json["category"],
-  //cooking_effect = json["cooking_effect"],
-  //hearts_recovered = json["hearts_recovered"],
-  //properties = json["properties"];
+      :
+        //location = json["common_locations"],
+        //category = json["category"],
+        //cooking_effect = json["cooking_effect"],
+        //hearts_recovered = json["hearts_recovered"],
+        //properties = json["properties"];
+        super.fromJson(json);
 }
