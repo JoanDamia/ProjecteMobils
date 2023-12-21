@@ -28,6 +28,34 @@ class HomeScreen extends StatelessWidget {
           ),
           SizedBox(
             width: screenSize.width,
+            height: backgroundPhotoHeight,
+            child: const Expanded(
+              child: Column(
+                children: [
+                  Spacer(),
+                  Text(
+                    'ZELDA APP',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.clip),
+                  ),
+                  Text(
+                    'Welcome to the Zelda BOTW Application',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.clip),
+                  ),
+                  Spacer(),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            width: screenSize.width,
             height: screenSize.height,
             child: SingleChildScrollView(
               child: Column(
