@@ -9,8 +9,8 @@ class ConpendiumScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-         title: const Text("COMPENDIUM"),
-        centerTitle: true,    
+        title: const Text("COMPENDIUM"),
+        centerTitle: true,
         leading: const HomeButton(),
       ),
       body: const ConpendiumTabBar(),
@@ -25,9 +25,9 @@ class HomeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(
-        Colors.black,
-        ),   
+        backgroundColor: MaterialStateProperty.all(
+          Colors.black,
+        ),
       ),
       child: const Icon(
         Icons.home_filled,

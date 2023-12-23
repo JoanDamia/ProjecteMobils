@@ -20,8 +20,7 @@ class HomeScreen extends StatelessWidget {
               height: backgroundPhotoHeight + 20,
               width: screenSize.width,
               child: const Image(
-                image: NetworkImage(
-                    'https://raw.githubusercontent.com/gadhagod/hyrule-compendium-demo/main/images/hyrule-compendium-meta.png'),
+                image: AssetImage('assets/hyrule_background.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -36,18 +35,40 @@ class HomeScreen extends StatelessWidget {
                   Text(
                     'ZELDA APP',
                     style: TextStyle(
-                        color: Colors.black,
+                        fontFamily: 'Zelda',
+                        color: Color.fromARGB(255, 199, 162, 95),
                         fontSize: 50,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.clip),
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(1.5, 2.0),
+                            blurRadius: 1.0,
+                            color: Color.fromARGB(200, 0, 0, 0),
+                          ),
+                          Shadow(
+                            offset: Offset(3.0, 4.0),
+                            blurRadius: 5.0,
+                            color: Color.fromARGB(130, 0, 0, 0),
+                          )
+                        ]),
                   ),
                   Text(
                     'Welcome to the Zelda BOTW Application',
                     style: TextStyle(
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 199, 162, 95),
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.clip),
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(1.0, 1.0),
+                            blurRadius: 1.0,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                          Shadow(
+                            offset: Offset(2.0, 2.0),
+                            blurRadius: 2.0,
+                            color: Color.fromARGB(197, 0, 0, 0),
+                          )
+                        ]),
                   ),
                   Spacer(),
                 ],
@@ -68,12 +89,21 @@ class HomeScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                    ),
+                        color: Colors.white,
+                        image: DecorationImage(
+                          image: AssetImage('assets/sheikah_background.jpg'),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                            blurRadius: 10.0,
+                            color: Color.fromARGB(200, 0, 0, 0),
+                          ),
+                        ]),
                     height: 1100,
                     width: screenSize.width,
                     child: Column(
