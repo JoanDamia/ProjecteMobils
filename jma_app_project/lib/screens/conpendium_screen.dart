@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jma_app_project/widgets/compendium_tab_bar.dart';
+import 'package:jma_app_project/widgets/compendium_widgets/compendium_tab_bar.dart';
 
 class ConpendiumScreen extends StatelessWidget {
   const ConpendiumScreen({super.key});

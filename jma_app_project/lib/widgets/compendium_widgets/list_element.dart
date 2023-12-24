@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jma_app_project/models/game_element.dart';
-import 'package:jma_app_project/widgets/details_dialog.dart';
+import 'package:jma_app_project/widgets/compendium_widgets/details_dialog.dart';
 
 class ListElement extends StatelessWidget {
   const ListElement({

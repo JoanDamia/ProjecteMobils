@@ -60,13 +60,19 @@ flutter:
   fonts:
     - family: Zelda
       fonts:
-        - asset: fonts/HyliaSerifBeta-Regular.otf
+        - asset: fonts/HyliaSerifBetaRegular.otf
+    - family: MedulaOne
+      fonts:
+        - asset: fonts/MedulaOne.otf
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
   - assets/hyrule_background.png
-  - assets/sheikah_background.jpg
+  - assets/black.jpg
+  - assets/blue.jpg
+  - assets/white.jpg
+  - assets/arrow_decoration_tip.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

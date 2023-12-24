@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jma_app_project/api_routes/treasure_api.dart';
 import 'package:jma_app_project/models/treasure.dart';
-import 'package:jma_app_project/widgets/list_element.dart';
+import 'package:jma_app_project/widgets/compendium_widgets/list_element.dart';
 
 class ShowTreasureList extends StatelessWidget {
   const ShowTreasureList({super.key});

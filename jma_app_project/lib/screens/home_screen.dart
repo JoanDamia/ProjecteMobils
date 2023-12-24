@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jma_app_project/widgets/home_widgets/app_intro_section.dart';
+import 'package:jma_app_project/widgets/home_widgets/arrow_divider.dart';
 
 const double backgroundPhotoHeight = 350;
 
@@ -25,56 +27,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            width: screenSize.width,
-            height: backgroundPhotoHeight,
-            child: const Expanded(
-              child: Column(
-                children: [
-                  Spacer(),
-                  Text(
-                    'ZELDA APP',
-                    style: TextStyle(
-                        fontFamily: 'Zelda',
-                        color: Color.fromARGB(255, 199, 162, 95),
-                        fontSize: 50,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(1.5, 2.0),
-                            blurRadius: 1.0,
-                            color: Color.fromARGB(200, 0, 0, 0),
-                          ),
-                          Shadow(
-                            offset: Offset(3.0, 4.0),
-                            blurRadius: 5.0,
-                            color: Color.fromARGB(130, 0, 0, 0),
-                          )
-                        ]),
-                  ),
-                  Text(
-                    'Welcome to the Zelda BOTW Application',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 199, 162, 95),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(1.0, 1.0),
-                            blurRadius: 1.0,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                          Shadow(
-                            offset: Offset(2.0, 2.0),
-                            blurRadius: 2.0,
-                            color: Color.fromARGB(197, 0, 0, 0),
-                          )
-                        ]),
-                  ),
-                  Spacer(),
-                ],
-              ),
-            ),
-          ),
+          AppIntroSection(screenSize: screenSize),
           SizedBox(
             width: screenSize.width,
             height: screenSize.height,
@@ -87,13 +40,12 @@ class HomeScreen extends StatelessWidget {
                     width: screenSize.width,
                   ),
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(30),
                     decoration: const BoxDecoration(
                         color: Colors.white,
                         image: DecorationImage(
-                          image: AssetImage('assets/sheikah_background.jpg'),
-                          fit: BoxFit.cover,
-                        ),
+                            image: AssetImage('assets/black.jpg'),
+                            repeat: ImageRepeat.repeat),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
@@ -108,6 +60,23 @@ class HomeScreen extends StatelessWidget {
                     width: screenSize.width,
                     child: Column(
                       children: [
+                        const Align(
+                          alignment: Alignment.topLeft,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Original Screens',
+                                style: TextStyle(
+                                  fontFamily: 'MedulaOne',
+                                  color: Colors.white,
+                                  fontSize: 40,
+                                ),
+                              ),
+                              ArrowDivider()
+                            ],
+                          ),
+                        ),
                         ElevatedButton(
                           child: const Text("Conpendium Screen"),
                           onPressed: () {
