@@ -11,12 +11,12 @@ class ArrowDivider extends StatelessWidget {
     return Row(
       children: [
         Container(
-            margin: const EdgeInsets.fromLTRB(0, 10, 0, 25),
+            margin: const EdgeInsets.fromLTRB(0, 10, 0, 30),
             width: screenSize.width / 2,
             height: 3,
             color: const Color.fromARGB(255, 172, 147, 94)),
         Container(
-          margin: const EdgeInsets.fromLTRB(0, 10, 0, 25),
+          margin: const EdgeInsets.fromLTRB(0, 10, 0, 30),
           height: 5,
           child: Transform.flip(
             flipX: true,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jma_app_project/widgets/home_widgets/app_intro_section.dart';
 import 'package:jma_app_project/widgets/home_widgets/arrow_divider.dart';
+import 'package:jma_app_project/widgets/home_widgets/compendium_link.dart';
 
 const double backgroundPhotoHeight = 350;
 
@@ -60,12 +61,12 @@ class HomeScreen extends StatelessWidget {
                     width: screenSize.width,
                     child: Column(
                       children: [
-                        const Align(
+                        Align(
                           alignment: Alignment.topLeft,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Original Screens',
                                 style: TextStyle(
                                   fontFamily: 'MedulaOne',
@@ -73,16 +74,10 @@ class HomeScreen extends StatelessWidget {
                                   fontSize: 40,
                                 ),
                               ),
-                              ArrowDivider()
+                              const ArrowDivider(),
+                              CompendiumLink(screenSize: screenSize)
                             ],
                           ),
-                        ),
-                        ElevatedButton(
-                          child: const Text("Conpendium Screen"),
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed("/ConpendiumScreen");
-                          },
                         ),
                       ],
                     ),
