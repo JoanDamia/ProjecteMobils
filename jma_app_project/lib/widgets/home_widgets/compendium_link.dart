@@ -48,37 +48,28 @@ class CompendiumLink extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
+                  flex: 2,
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Compendium',
                           style: TextStyle(
                               fontFamily: 'Zelda',
-                              color: Color.fromARGB(255, 94, 203, 253),
+                              color: const Color.fromARGB(255, 94, 203, 253),
                               fontSize: 30,
-                              shadows: <Shadow>[
-                                Shadow(
-                                  blurRadius: 3.0,
-                                  color: Color.fromARGB(158, 45, 195, 255),
-                                ),
-                              ]),
+                              shadows: <Shadow>[BlueLight()]),
                         ),
                         Container(
                           padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: const Text(
+                          child: Text(
                             'Little encyclopedia with all the elements of the game',
                             style: TextStyle(
-                                color: Color.fromARGB(255, 94, 203, 253),
+                                color: const Color.fromARGB(255, 94, 203, 253),
                                 fontSize: 15,
-                                shadows: <Shadow>[
-                                  Shadow(
-                                    blurRadius: 3.0,
-                                    color: Color.fromARGB(158, 45, 195, 255),
-                                  ),
-                                ]),
+                                shadows: <Shadow>[BlueLight()]),
                           ),
                         ),
                       ],
@@ -86,14 +77,25 @@ class CompendiumLink extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    child: ElevatedButton(
-                      child: const Text("Conpendium Screen"),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed("/ConpendiumScreen");
-                      },
-                    ),
+                  flex: 1,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        foregroundColor:
+                            const Color.fromARGB(255, 94, 203, 253),
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(30),
+                        side: const BorderSide(
+                          width: 3,
+                          color: Color.fromARGB(255, 94, 203, 253),
+                        )),
+                    child: Icon(Icons.menu_book,
+                        size: screenSize.width / 10,
+                        shadows: <Shadow>[
+                          BlueLight(),
+                        ]),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed("/ConpendiumScreen");
+                    },
                   ),
                 )
               ],
@@ -105,6 +107,13 @@ class CompendiumLink extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Shadow BlueLight() {
+    return const Shadow(
+      blurRadius: 10.0,
+      color: Color.fromARGB(255, 45, 195, 255),
     );
   }
 }
