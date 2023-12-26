@@ -14,17 +14,17 @@ class AppIntroSection extends StatelessWidget {
     return SizedBox(
       width: screenSize.width,
       height: backgroundPhotoHeight,
-      child: const Expanded(
+      child: Expanded(
         child: Column(
           children: [
-            Spacer(),
+            const Spacer(),
             Text(
               'ZELDA APP',
               style: TextStyle(
                   fontFamily: 'Zelda',
-                  color: Color.fromARGB(255, 199, 162, 95),
-                  fontSize: 50,
-                  shadows: <Shadow>[
+                  color: const Color.fromARGB(255, 199, 162, 95),
+                  fontSize: screenSize.width / 12,
+                  shadows: const <Shadow>[
                     Shadow(
                       offset: Offset(1.5, 2.0),
                       blurRadius: 1.0,
@@ -40,10 +40,10 @@ class AppIntroSection extends StatelessWidget {
             Text(
               'Welcome to the Zelda BOTW Application',
               style: TextStyle(
-                  color: Color.fromARGB(255, 199, 162, 95),
-                  fontSize: 20,
+                  color: const Color.fromARGB(255, 199, 162, 95),
+                  fontSize: screenSize.width / 24,
                   fontWeight: FontWeight.bold,
-                  shadows: <Shadow>[
+                  shadows: const <Shadow>[
                     Shadow(
                       offset: Offset(1.0, 1.0),
                       blurRadius: 1.0,
@@ -56,7 +56,7 @@ class AppIntroSection extends StatelessWidget {
                     )
                   ]),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

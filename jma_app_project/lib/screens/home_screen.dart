@@ -57,8 +57,6 @@ class HomeScreen extends StatelessWidget {
                             color: Color.fromARGB(200, 0, 0, 0),
                           ),
                         ]),
-                    height: 1100,
-                    width: screenSize.width,
                     child: Column(
                       children: [
                         Align(
@@ -91,7 +89,26 @@ class HomeScreen extends StatelessWidget {
                                     'Zelda BOTW game interactive map with game item locator',
                                 iconLink: Icons.map,
                                 screenRoute: "/MapScreen",
-                              )
+                              ),
+                              const ArrowDivider(
+                                dividerTitle: 'Zelda Simulators',
+                              ),
+                              ScreenLink(
+                                screenSize: screenSize,
+                                titleLink: 'Combat',
+                                descriptionLink:
+                                    'Combat simulation to test the statistics of different equipment',
+                                iconLink: Icons.shield_moon_outlined,
+                                screenRoute: "/CombatScreen",
+                              ),
+                              ScreenLink(
+                                screenSize: screenSize,
+                                titleLink: 'Recipes',
+                                descriptionLink:
+                                    'Cooking simulator that allows you to create different recipes using the game materials',
+                                iconLink: Icons.dining_outlined,
+                                screenRoute: "/RecipesScreen",
+                              ),
                             ],
                           ),
                         ),

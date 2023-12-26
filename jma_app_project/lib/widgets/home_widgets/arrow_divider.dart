@@ -16,10 +16,10 @@ class ArrowDivider extends StatelessWidget {
       children: [
         Text(
           dividerTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontFamily: 'MedulaOne',
             color: Colors.white,
-            fontSize: 46,
+            fontSize: screenSize.width / 12,
           ),
         ),
         Row(

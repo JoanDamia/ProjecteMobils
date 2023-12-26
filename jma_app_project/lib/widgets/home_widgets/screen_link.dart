@@ -67,7 +67,7 @@ class ScreenLink extends StatelessWidget {
                           style: TextStyle(
                               fontFamily: 'Zelda',
                               color: const Color.fromARGB(255, 94, 203, 253),
-                              fontSize: 36,
+                              fontSize: screenSize.width / 15,
                               shadows: <Shadow>[blueLight()]),
                         ),
                         Container(
@@ -76,7 +76,7 @@ class ScreenLink extends StatelessWidget {
                             descriptionLink,
                             style: TextStyle(
                                 color: const Color.fromARGB(255, 94, 203, 253),
-                                fontSize: 16,
+                                fontSize: screenSize.width / 32,
                                 shadows: <Shadow>[blueLight()]),
                           ),
                         ),
