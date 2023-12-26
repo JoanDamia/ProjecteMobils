@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jma_app_project/widgets/home_widgets/app_intro_section.dart';
 import 'package:jma_app_project/widgets/home_widgets/arrow_divider.dart';
-import 'package:jma_app_project/widgets/home_widgets/compendium_link.dart';
+import 'package:jma_app_project/widgets/home_widgets/screen_link.dart';
 
 const double backgroundPhotoHeight = 350;
 
@@ -64,18 +64,34 @@ class HomeScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Original Screens',
-                                style: TextStyle(
-                                  fontFamily: 'MedulaOne',
-                                  color: Colors.white,
-                                  fontSize: 40,
-                                ),
+                              const ArrowDivider(
+                                dividerTitle: 'Original Screens',
                               ),
-                              const ArrowDivider(),
-                              CompendiumLink(screenSize: screenSize)
+                              ScreenLink(
+                                screenSize: screenSize,
+                                titleLink: 'Compendium',
+                                descriptionLink:
+                                    'Small encyclopedia with all the elements of the game',
+                                iconLink: Icons.menu_book,
+                                screenRoute: "/ConpendiumScreen",
+                              ),
+                              ScreenLink(
+                                screenSize: screenSize,
+                                titleLink: 'Registration',
+                                descriptionLink:
+                                    'Random horse generator with registration and query option',
+                                iconLink: Icons.edit_square,
+                                screenRoute: "/RegistrationScreen",
+                              ),
+                              ScreenLink(
+                                screenSize: screenSize,
+                                titleLink: 'Map',
+                                descriptionLink:
+                                    'Zelda BOTW game interactive map with game item locator',
+                                iconLink: Icons.map,
+                                screenRoute: "/MapScreen",
+                              )
                             ],
                           ),
                         ),

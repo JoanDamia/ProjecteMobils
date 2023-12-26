@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 
-class CompendiumLink extends StatelessWidget {
-  const CompendiumLink({
+class ScreenLink extends StatelessWidget {
+  const ScreenLink({
     super.key,
     required this.screenSize,
+    required this.titleLink,
+    required this.descriptionLink,
+    required this.iconLink,
+    required this.screenRoute,
   });
 
   final Size screenSize;
+  final String titleLink;
+  final String descriptionLink;
+  final IconData iconLink;
+  final String screenRoute;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 0, 0, 30),
+      margin: const EdgeInsets.fromLTRB(0, 0, 0, 35),
       decoration: const BoxDecoration(
           color: Color.fromARGB(255, 48, 137, 211),
           border: Border(),
@@ -55,21 +63,21 @@ class CompendiumLink extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Compendium',
+                          titleLink,
                           style: TextStyle(
                               fontFamily: 'Zelda',
                               color: const Color.fromARGB(255, 94, 203, 253),
-                              fontSize: 30,
-                              shadows: <Shadow>[BlueLight()]),
+                              fontSize: 36,
+                              shadows: <Shadow>[blueLight()]),
                         ),
                         Container(
                           padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                           child: Text(
-                            'Little encyclopedia with all the elements of the game',
+                            descriptionLink,
                             style: TextStyle(
                                 color: const Color.fromARGB(255, 94, 203, 253),
-                                fontSize: 15,
-                                shadows: <Shadow>[BlueLight()]),
+                                fontSize: 16,
+                                shadows: <Shadow>[blueLight()]),
                           ),
                         ),
                       ],
@@ -88,13 +96,13 @@ class CompendiumLink extends StatelessWidget {
                           width: 3,
                           color: Color.fromARGB(255, 94, 203, 253),
                         )),
-                    child: Icon(Icons.menu_book,
+                    child: Icon(iconLink,
                         size: screenSize.width / 10,
                         shadows: <Shadow>[
-                          BlueLight(),
+                          blueLight(),
                         ]),
                     onPressed: () {
-                      Navigator.of(context).pushNamed("/ConpendiumScreen");
+                      Navigator.of(context).pushNamed(screenRoute);
                     },
                   ),
                 )
@@ -110,7 +118,7 @@ class CompendiumLink extends StatelessWidget {
     );
   }
 
-  Shadow BlueLight() {
+  Shadow blueLight() {
     return const Shadow(
       blurRadius: 10.0,
       color: Color.fromARGB(255, 45, 195, 255),
