@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jma_app_project/api_routes/all_elements_api.dart';
-import 'package:jma_app_project/models/game_element.dart';
-import 'package:jma_app_project/widgets/compendium_widgets/list_element.dart';
 
 class SearchListElement extends StatefulWidget {
   const SearchListElement({Key? key}) : super(key: key);
@@ -22,17 +19,40 @@ class _SearchListElementState extends State<SearchListElement> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
           child: Row(
             children: [
+              SizedBox(
+                width: screenSize.width / 12,
+              ),
               Expanded(
-                child: SizedBox(
-                  height: 50,
+                child: Container(
+                  padding: const EdgeInsets.all(14),
                   width: 300,
                   child: TextField(
+                    decoration: const InputDecoration(
+                      filled: true,
+                      fillColor: Color.fromARGB(64, 0, 0, 0),
+                      border: OutlineInputBorder(),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Color.fromARGB(255, 199, 162, 95)),
+                      ),
+                    ),
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 94, 203, 253),
+                        shadows: <Shadow>[
+                          Shadow(
+                            blurRadius: 10.0,
+                            color: Color.fromARGB(255, 45, 195, 255),
+                          )
+                        ]),
+                    textAlign: TextAlign.center,
+                    cursorColor: const Color.fromARGB(255, 94, 203, 253),
                     controller: controller,
                     onChanged: (text) {
                       text = results;
@@ -41,35 +61,19 @@ class _SearchListElementState extends State<SearchListElement> {
                   ),
                 ),
               ),
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () {
-                  controller.text = '';
-                },
+              SizedBox(
+                width: screenSize.width / 12,
+                child: Center(
+                  child: IconButton(
+                    icon: const Icon(Icons.close),
+                    color: const Color.fromARGB(255, 199, 162, 95),
+                    onPressed: () {
+                      controller.text = '';
+                    },
+                  ),
+                ),
               )
             ],
-          ),
-        ),
-        Expanded(
-          child: FutureBuilder(
-            future: apiLoadAll(),
-            builder: (
-              BuildContext context,
-              AsyncSnapshot<List<GameElement>> snapshot,
-            ) {
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              final allElementsList = snapshot.data!;
-              return ListView.builder(
-                itemCount: results.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListElement(gameElement: allElementsList[index]);
-                },
-              );
-            },
           ),
         ),
       ],

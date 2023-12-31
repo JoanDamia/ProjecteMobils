@@ -74,6 +74,11 @@ flutter:
   - assets/white.jpg
   - assets/arrow_decoration_tip.png
   - assets/divider_blue.png
+  - assets/creatures.png
+  - assets/monsters.png
+  - assets/materials.png
+  - assets/equipment.png
+  - assets/treasures.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

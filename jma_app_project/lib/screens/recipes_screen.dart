@@ -10,6 +10,8 @@ class RecipesScreen extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        shadowColor: const Color.fromARGB(255, 255, 225, 127),
+        elevation: 3,
         backgroundColor: Colors.black,
         titleSpacing: 0,
         automaticallyImplyLeading: false,
