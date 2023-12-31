@@ -11,6 +11,7 @@ class AppIntroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return SizedBox(
       width: screenSize.width,
       height: backgroundPhotoHeight,

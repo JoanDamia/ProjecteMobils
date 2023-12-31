@@ -1,39 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:jma_app_project/widgets/general_widgets/home_button.dart';
+import 'package:jma_app_project/widgets/general_widgets/important_tittle.dart';
 
 class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
+        titleSpacing: 0,
         automaticallyImplyLeading: false,
-        title: const Text("REGISTRATION"),
+        title: ImportantTittle(
+          screenSize: screenSize,
+          tittleName: 'REGISTRATION',
+        ),
         centerTitle: true,
         leading: const HomeButton(),
       ),
-    );
-  }
-}
-
-class HomeButton extends StatelessWidget {
-  const HomeButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(
-          Colors.black,
-        ),
-      ),
-      child: const Icon(
-        Icons.home_filled,
-        color: Colors.white,
-      ),
-      onPressed: () {
-        Navigator.of(context).pushNamed("/");
-      },
     );
   }
 }
