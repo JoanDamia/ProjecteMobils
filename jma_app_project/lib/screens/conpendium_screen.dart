@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jma_app_project/widgets/compendium_widgets/compendium_tab_bar.dart';
+import 'package:jma_app_project/widgets/compendium_widgets/search_list_element.dart';
 
 class ConpendiumScreen extends StatelessWidget {
   const ConpendiumScreen({super.key});
@@ -7,14 +8,18 @@ class ConpendiumScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text("COMPENDIUM"),
-        centerTitle: true,
-        leading: const HomeButton(),
-      ),
-      body: const ConpendiumTabBar(),
-    );
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Text("COMPENDIUM"),
+          centerTitle: true,
+          leading: const HomeButton(),
+        ),
+        body: const Stack(
+          children: [
+            ConpendiumTabBar(),
+            SearchListElement(),
+          ],
+        ));
   }
 }
 

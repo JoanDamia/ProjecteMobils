@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jma_app_project/widgets/compendium_widgets/show_creature_list.dart';
-import 'package:jma_app_project/widgets/compendium_widgets/show_equipment_list.dart';
-import 'package:jma_app_project/widgets/compendium_widgets/show_materials_list.dart';
-import 'package:jma_app_project/widgets/compendium_widgets/show_monster_list.dart';
-import 'package:jma_app_project/widgets/compendium_widgets/show_treasure_list.dart';
+import 'package:jma_app_project/widgets/compendium_widgets/show_element_list.dart';
 
 class ConpendiumTabBar extends StatelessWidget {
   const ConpendiumTabBar({
