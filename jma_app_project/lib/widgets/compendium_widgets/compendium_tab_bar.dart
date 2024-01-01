@@ -14,7 +14,7 @@ class ConpendiumTabBar extends StatelessWidget {
       home: DefaultTabController(
         length: 5,
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: const Color.fromARGB(255, 238, 238, 238),
           appBar: AppBar(
             backgroundColor: const Color.fromARGB(255, 36, 28, 26),
             toolbarHeight: screenSize.height / 10,
