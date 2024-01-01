@@ -17,7 +17,7 @@ class RegistrationScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: ImportantTittle(
           screenSize: screenSize,
-          tittleName: 'REGISTRATION',
+          tittleName: 'REGISTRATION     ',
         ),
         centerTitle: true,
         leading: const HomeButton(),

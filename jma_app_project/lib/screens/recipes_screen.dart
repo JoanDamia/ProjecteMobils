@@ -17,7 +17,7 @@ class RecipesScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: ImportantTittle(
           screenSize: screenSize,
-          tittleName: 'RECIPES',
+          tittleName: 'RECIPES     ',
         ),
         centerTitle: true,
         leading: const HomeButton(),

@@ -19,7 +19,7 @@ class ConpendiumScreen extends StatelessWidget {
           automaticallyImplyLeading: false,
           title: ImportantTittle(
             screenSize: screenSize,
-            tittleName: 'COMPENDIUM',
+            tittleName: 'COMPENDIUM     ',
           ),
           centerTitle: true,
           leading: const HomeButton(),

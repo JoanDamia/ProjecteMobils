@@ -17,7 +17,7 @@ class CombatScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: ImportantTittle(
           screenSize: screenSize,
-          tittleName: 'COMBAT',
+          tittleName: 'COMBAT     ',
         ),
         centerTitle: true,
         leading: const HomeButton(),

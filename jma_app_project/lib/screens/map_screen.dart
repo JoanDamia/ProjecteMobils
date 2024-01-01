@@ -17,7 +17,7 @@ class MapScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: ImportantTittle(
           screenSize: screenSize,
-          tittleName: 'MAP',
+          tittleName: 'MAP     ',
         ),
         centerTitle: true,
         leading: const HomeButton(),
