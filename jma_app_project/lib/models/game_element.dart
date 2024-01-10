@@ -9,4 +9,10 @@ class GameElement {
         image = json["image"],
         id = json["id"],
         description = json["description"];
+
+  bool matchesSearch(String search) {
+    if (name.contains(search)) return true;
+    if (description.contains(search)) return true;
+    return false;
+  }
 }
