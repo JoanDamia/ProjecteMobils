@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jma_app_project/widgets/general_widgets/home_button.dart';
 import 'package:jma_app_project/widgets/general_widgets/important_tittle.dart';
+import 'package:jma_app_project/widgets/recipes_widgets/recipes_tab_bar.dart';
 
 class RecipesScreen extends StatelessWidget {
   const RecipesScreen({super.key});
@@ -22,6 +23,7 @@ class RecipesScreen extends StatelessWidget {
         centerTitle: true,
         leading: const HomeButton(),
       ),
+      body: const RecipesTabBar(),
     );
   }
 }
