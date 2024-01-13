@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         "/": (context) => const HomeScreen(),
         "/ConpendiumScreen": (context) => const ConpendiumScreen(),
         "/RegistrationScreen": (context) => const RegistrationScreen(),
-        "/MapScreen": (context) => const MapScreen(),
+        "/MapScreen": (context) =>  MapScreen(),
         "/CombatScreen": (context) => const CombatScreen(),
         "/RecipesScreen": (context) => const RecipesScreen(),
       },
