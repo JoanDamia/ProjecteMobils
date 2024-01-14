@@ -25,10 +25,9 @@ class MaterialsGrid extends StatelessWidget {
         }
         final allElementsList = snapshot.data!;
 
-        // TODO: Filtrar aquí
-
         return GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3), 
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3),
           itemCount: allElementsList.length,
           itemBuilder: (BuildContext context, int index) {
             return GridElement(gameElement: allElementsList[index]);
@@ -37,4 +36,4 @@ class MaterialsGrid extends StatelessWidget {
       },
     );
   }
-  }
+}

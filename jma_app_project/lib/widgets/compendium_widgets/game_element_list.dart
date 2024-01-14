@@ -25,8 +25,6 @@ class GameElementList extends StatelessWidget {
         }
         final allElementsList = snapshot.data!;
 
-        // TODO: Filtrar aquí
-
         return ListView.builder(
           itemCount: allElementsList.length,
           itemBuilder: (BuildContext context, int index) {
