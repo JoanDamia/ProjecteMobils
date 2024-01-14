@@ -23,7 +23,31 @@ class RecipesScreen extends StatelessWidget {
         centerTitle: true,
         leading: const HomeButton(),
       ),
-      body: const RecipesTabBar(),
+      body:Column(
+        children: [
+          SizedBox(        
+            height: screenSize.height / 1.5,
+            child: const RecipesTabBar(),
+          ),
+          SizedBox(height: 50,),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                  minimumSize: Size(screenSize.width / 20 ,screenSize.height / 15),
+                  shape:BeveledRectangleBorder(),
+                  padding: EdgeInsets.all(20), 
+                  backgroundColor: const Color.fromARGB(255, 46, 45, 45),
+                  foregroundColor: const Color.fromARGB(255, 255, 225, 127),
+                  shadowColor: Colors.black, 
+                ),
+            onPressed: (){}, 
+            child:  Text(
+              "Make Recipe",
+              style: TextStyle(fontSize: screenSize.width / 20,
+              fontFamily: 'Zelda'),
+              ),
+            )
+        ],
+      ),
     );
   }
 }
