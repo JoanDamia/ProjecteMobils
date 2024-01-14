@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+
 import 'package:jma_app_project/screens/map_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +67,7 @@ class HorseData {
   }
 
   int strengthStars() {
+
     if (strength < 110) {
       return 1;
     } else if (strength < 160) {
@@ -75,11 +77,13 @@ class HorseData {
     } else if (strength < 300) {
       return 4;
     } else {
+
       return 5;
     }
   }
 
   int speedStars() {
+
     if (speed < 10.5) {
       return 2;
     } else if (speed < 13) {
@@ -87,6 +91,7 @@ class HorseData {
     } else if (strength < 14) {
       return 4;
     } else {
+
       return 5;
     }
   }
@@ -106,6 +111,7 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
 
   /// HORSE STAT VALUES ///
   final Random random = Random();
+
   static const List<int> _strengthChoices = [
     80,
     110,
@@ -126,6 +132,7 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
     "stalhorse"
   ];
 
+
   /// UI ///
 
   @override
@@ -137,6 +144,7 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
   }
 
   void _generateRandomData() {
+
     final strength = _strengthChoices[random.nextInt(_strengthChoices.length)];
     final speed = _speedChoices[random.nextInt(_speedChoices.length)];
     final stamina = _staminaChoices[random.nextInt(_staminaChoices.length)];
@@ -151,6 +159,7 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
           strength: strength,
           speed: speed,
           stamina: stamina);
+
     });
   }
 
@@ -185,6 +194,7 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
           );
         });
 
+
     // if name is valid
     if (userInput != null && userInput.isNotEmpty) {
       currentHorse.name = userInput;
@@ -202,8 +212,10 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
 
   @override
   Widget build(BuildContext context) {
+
     if (savedHorses == null) {
       // loading
+
       return const Center(
         child: CircularProgressIndicator(),
       );
@@ -246,6 +258,7 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
         ],
       ),
     );
+
   }
 
   /// MANAGE RAW DATA ///
@@ -268,7 +281,9 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
       setState(() {
         savedHorses = horses;
       });
+
     } else {
+
       setState(() {
         savedHorses = [];
       });
@@ -284,14 +299,17 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
 }
 
 class RoundedButton extends StatelessWidget {
+
   const RoundedButton(
       {super.key, required this.title, required this.onPressCallback});
+
 
   final String title;
   final VoidCallback onPressCallback;
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       child: ElevatedButton(
@@ -308,6 +326,7 @@ class RoundedButton extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Text(
             title,
+
             style: const TextStyle(
                 fontSize: 16.0, color: Colors.white, fontFamily: 'Zelda'),
           ),
@@ -440,6 +459,7 @@ class ShowListElement extends StatelessWidget {
         ),
       ),
     ]);
+
   }
 
   @override
@@ -499,6 +519,100 @@ class ShowListElement extends StatelessWidget {
   }
 }
 
+class ShowListElement extends StatelessWidget {
+  const ShowListElement({
+    super.key,
+    required this.data,
+  });
+
+  final HorseData data;
+
+  Widget _buildStat(int numStars, String name, BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
+    return Row(
+      children: [
+        Container(
+          margin: const EdgeInsets.fromLTRB(5, 0,0,0),
+          child: Text(
+            name,
+            style: TextStyle(
+              fontFamily: 'Zelda',
+              color: const Color.fromARGB(255, 77, 169, 255),
+              fontSize: screenSize.width / 30,
+            ),
+          ),
+        ),
+        Row(
+          children: List.generate(
+            numStars,
+                (index) => const Icon(
+                  Icons.star,
+                  color: Colors.yellow,
+            ),
+          ),
+        ),
+      ]
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    return Container(
+      padding: const EdgeInsets.all(5),
+      margin: const EdgeInsets.fromLTRB(6, 3, 6, 3),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: const DecorationImage(
+              image: AssetImage('assets/white.jpg'), fit: BoxFit.cover),
+          boxShadow: const <BoxShadow>[
+            BoxShadow(
+              blurRadius: 1.0,
+              color: Color.fromARGB(100, 0, 0, 0),
+            )
+          ]),
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: const Color.fromARGB(255, 199, 162, 95),
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(3),
+            ),
+            margin: const EdgeInsets.fromLTRB(10, 10, 20, 10),
+            height: screenSize.height / 10,
+            child: Image(
+              image: NetworkImage(data.image),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                child: Text(
+                  data.name,
+                  style: TextStyle(
+                    fontFamily: 'Zelda',
+                    color: const Color.fromARGB(255, 199, 162, 95),
+                    fontSize: screenSize.width / 20,
+                  ),
+                ),
+              ),
+              _buildStat(data.strengthStars(), "Strength", context),
+              _buildStat(data.speedStars(), "Speed", context),
+              _buildStat(data.stamina, "Stamina", context)
+            ],
+          )
+         ],
+      ),
+    );
+  }
+}
+
 class ShowDataList extends StatelessWidget {
   final List<HorseData> data;
 
@@ -514,3 +628,4 @@ class ShowDataList extends StatelessWidget {
     );
   }
 }
+

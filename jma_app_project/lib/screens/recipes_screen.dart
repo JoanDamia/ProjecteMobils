@@ -29,6 +29,7 @@ class RecipesScreen extends StatelessWidget {
             height: screenSize.height / 1.5,
             child: const RecipesTabBar(),
           ),
+
           const SizedBox(height: 50,),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
