@@ -29,12 +29,13 @@ class RecipesScreen extends StatelessWidget {
             height: screenSize.height / 1.5,
             child: const RecipesTabBar(),
           ),
-          SizedBox(height: 50,),
+
+          const SizedBox(height: 50,),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
                   minimumSize: Size(screenSize.width / 20 ,screenSize.height / 15),
-                  shape:BeveledRectangleBorder(),
-                  padding: EdgeInsets.all(20), 
+                  shape:const BeveledRectangleBorder(),
+                  padding: const EdgeInsets.all(20), 
                   backgroundColor: const Color.fromARGB(255, 46, 45, 45),
                   foregroundColor: const Color.fromARGB(255, 255, 225, 127),
                   shadowColor: Colors.black, 
@@ -50,4 +51,20 @@ class RecipesScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class ListaConID extends StatefulWidget {
+  @override
+  _ListaConIDState createState() => _ListaConIDState();
+}
+
+class _ListaConIDState extends State<ListaConID> {
+  List<int> listaIDs = [];
+
+  void agregarElemento(int id) {
+    setState(() {
+      listaIDs.add(id);
+    });
+  }
+ @override
 }

@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+
+import 'package:jma_app_project/screens/map_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -40,7 +42,12 @@ class HorseData {
   double speed;
   int stamina;
 
-  HorseData({required this.name, required this.image, required this.strength, required this.speed, required this.stamina});
+  HorseData(
+      {required this.name,
+      required this.image,
+      required this.strength,
+      required this.speed,
+      required this.stamina});
 
   HorseData.fromJson(Map<String, dynamic> json)
       : name = json['name'],
@@ -60,34 +67,31 @@ class HorseData {
   }
 
   int strengthStars() {
-    if (strength < 110){
+
+    if (strength < 110) {
       return 1;
-    }
-    else if (strength < 160) {
+    } else if (strength < 160) {
       return 2;
-    }
-    else if (strength < 220) {
+    } else if (strength < 220) {
       return 3;
-    }
-    else if (strength < 300) {
+    } else if (strength < 300) {
       return 4;
-    }
-    else {
+    } else {
+
       return 5;
     }
   }
 
   int speedStars() {
-    if (speed < 10.5){
+
+    if (speed < 10.5) {
       return 2;
-    }
-    else if (speed < 13) {
+    } else if (speed < 13) {
       return 3;
-    }
-    else if (strength < 14) {
+    } else if (strength < 14) {
       return 4;
-    }
-    else {
+    } else {
+
       return 5;
     }
   }
@@ -107,10 +111,27 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
 
   /// HORSE STAT VALUES ///
   final Random random = Random();
-  static const List<int> _strengthChoices = [80, 110, 130 ,150, 160, 220, 240, 250, 300];
-  static const List<double> _speedChoices = [9.8, 10.5, 13 ,14];
+
+  static const List<int> _strengthChoices = [
+    80,
+    110,
+    130,
+    150,
+    160,
+    220,
+    240,
+    250,
+    300
+  ];
+  static const List<double> _speedChoices = [9.8, 10.5, 13, 14];
   static const List<int> _staminaChoices = [1, 2, 3, 4, 5];
-  static const List<String> _horseIds = ["horse", "giant horse", "white horse", "stalhorse"];
+  static const List<String> _horseIds = [
+    "horse",
+    "giant horse",
+    "white horse",
+    "stalhorse"
+  ];
+
 
   /// UI ///
 
@@ -123,48 +144,56 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
   }
 
   void _generateRandomData() {
-    final strength = _strengthChoices[ random.nextInt(_strengthChoices.length)];
-    final speed = _speedChoices[ random.nextInt(_speedChoices.length)];
-    final stamina = _staminaChoices[ random.nextInt(_staminaChoices.length)];
-    final horse = _horseIds[ random.nextInt(_horseIds.length)];
-    final image = "https://botw-compendium.herokuapp.com/api/v3/compendium/entry/$horse/image";
+
+    final strength = _strengthChoices[random.nextInt(_strengthChoices.length)];
+    final speed = _speedChoices[random.nextInt(_speedChoices.length)];
+    final stamina = _staminaChoices[random.nextInt(_staminaChoices.length)];
+    final horse = _horseIds[random.nextInt(_horseIds.length)];
+    final image =
+        "https://botw-compendium.herokuapp.com/api/v3/compendium/entry/$horse/image";
 
     setState(() {
-      currentHorse = HorseData(name: horse, image: image, strength: strength, speed: speed, stamina: stamina);
+      currentHorse = HorseData(
+          name: horse,
+          image: image,
+          strength: strength,
+          speed: speed,
+          stamina: stamina);
+
     });
   }
 
   void _registerData(BuildContext context) async {
     // show input dialog
     String? userInput = await showDialog<String>(
-      context: context,
-      builder: (BuildContext context) {
-        TextEditingController controller = TextEditingController();
-        return AlertDialog(
-          title: const Text('Enter Horse Name'),
-          content: TextField(
-            controller: controller,
-            decoration: const InputDecoration(hintText: "Horse"),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                if (controller.text.isNotEmpty){
-                  Navigator.of(context).pop(controller.text);
-                }
-              },
-              child: const Text('OK'),
+        context: context,
+        builder: (BuildContext context) {
+          TextEditingController controller = TextEditingController();
+          return AlertDialog(
+            title: const Text('Enter Horse Name'),
+            content: TextField(
+              controller: controller,
+              decoration: const InputDecoration(hintText: "Horse"),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-          ],
-        );
-      }
-      );
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  if (controller.text.isNotEmpty) {
+                    Navigator.of(context).pop(controller.text);
+                  }
+                },
+                child: const Text('OK'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancel'),
+              ),
+            ],
+          );
+        });
+
 
     // if name is valid
     if (userInput != null && userInput.isNotEmpty) {
@@ -183,7 +212,10 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (savedHorses == null) { // loading
+
+    if (savedHorses == null) {
+      // loading
+
       return const Center(
         child: CircularProgressIndicator(),
       );
@@ -191,36 +223,42 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
 
     final data = savedHorses!;
     return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                RoundedButton(title: "Generate New", onPressCallback: _generateRandomData),
-                RoundedButton(title: "Register", onPressCallback: () => _registerData(context)),
-              ],
-            ),
-            ShowGeneratedData(data: currentHorse),
-            const SizedBox(height: 10), // separation
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 16),
-                    child: ArrowDivider(dividerTitle: "Saved Horses")
-                )
-              ],
-            ),
-            const SizedBox(height: 10), // separation
-            Expanded(child: ShowDataList(data: data,)),
-            const SizedBox(height: 10), // separation
-          ],
-        ),
-      );
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              RoundedButton(
+                  title: "Generate New", onPressCallback: _generateRandomData),
+              RoundedButton(
+                  title: "Register",
+                  onPressCallback: () => _registerData(context)),
+            ],
+          ),
+          ShowGeneratedData(data: currentHorse),
+          const SizedBox(height: 10), // separation
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                  padding: EdgeInsets.only(left: 16),
+                  child: ArrowDivider(dividerTitle: "Saved Horses"))
+            ],
+          ),
+          const SizedBox(height: 10), // separation
+          Expanded(
+              child: ShowDataList(
+            data: data,
+          )),
+          const SizedBox(height: 10), // separation
+        ],
+      ),
+    );
+
   }
 
   /// MANAGE RAW DATA ///
@@ -243,8 +281,9 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
       setState(() {
         savedHorses = horses;
       });
-    }
-    else {
+
+    } else {
+
       setState(() {
         savedHorses = [];
       });
@@ -260,14 +299,18 @@ class GenerateHorsesWidgetState extends State<GenerateHorsesWidget> {
 }
 
 class RoundedButton extends StatelessWidget {
-  const RoundedButton({super.key, required this.title, required this.onPressCallback});
+
+  const RoundedButton(
+      {super.key, required this.title, required this.onPressCallback});
+
 
   final String title;
   final VoidCallback onPressCallback;
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+
+    return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       child: ElevatedButton(
         onPressed: () {
@@ -283,54 +326,12 @@ class RoundedButton extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Text(
             title,
-            style: const TextStyle(fontSize: 16.0, color: Colors.white, fontFamily: 'Zelda'),
+
+            style: const TextStyle(
+                fontSize: 16.0, color: Colors.white, fontFamily: 'Zelda'),
           ),
         ),
       ),
-    );
-  }
-}
-
-class ArrowDivider extends StatelessWidget {
-  const ArrowDivider({
-    super.key,
-    required this.dividerTitle,
-  });
-
-  final String dividerTitle;
-
-  @override
-  Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          dividerTitle,
-          style: TextStyle(
-            fontFamily: 'Zelda',
-            fontSize: screenSize.width / 12,
-          ),
-        ),
-        Row(
-          children: [
-            Container(
-                width: screenSize.width * 0.75,
-                height: 3,
-                color: const Color.fromARGB(255, 172, 147, 94)),
-            SizedBox(
-              height: 5,
-              child: Transform.flip(
-                flipX: true,
-                child: const Image(
-                  image: AssetImage('assets/arrow_decoration_tip.png'),
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-            )
-          ],
-        ),
-      ],
     );
   }
 }
@@ -343,30 +344,28 @@ class ShowGeneratedData extends StatelessWidget {
   Widget _buildStat(int numStars, String name, BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
 
-    return Row(
-        children: [
-          Container(
-            margin: const EdgeInsets.all(5),
-            child: Text(
-              name,
-              style: TextStyle(
-                fontFamily: 'Zelda',
-                color: Colors.white,
-                fontSize: screenSize.width / 30,
-              ),
-            ),
+    return Row(children: [
+      Container(
+        margin: const EdgeInsets.all(5),
+        child: Text(
+          name,
+          style: TextStyle(
+            fontFamily: 'Zelda',
+            color: Colors.white,
+            fontSize: screenSize.width / 30,
           ),
-          Row(
-            children: List.generate(
-              numStars,
-                  (index) => const Icon(
-                Icons.star,
-                color: Colors.yellow,
-              ),
-            ),
+        ),
+      ),
+      Row(
+        children: List.generate(
+          numStars,
+          (index) => const Icon(
+            Icons.star,
+            color: Colors.yellow,
           ),
-        ]
-    );
+        ),
+      ),
+    ]);
   }
 
   @override
@@ -407,6 +406,99 @@ class ShowGeneratedData extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.all(5),
+                child: Text(
+                  data.name,
+                  style: TextStyle(
+                    fontFamily: 'Zelda',
+                    color: const Color.fromARGB(255, 199, 162, 95),
+                    fontSize: screenSize.width / 20,
+                  ),
+                ),
+              ),
+              _buildStat(data.strengthStars(), "Strength", context),
+              _buildStat(data.speedStars(), "Speed", context),
+              _buildStat(data.stamina, "Stamina", context)
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class ShowListElement extends StatelessWidget {
+  const ShowListElement({
+    super.key,
+    required this.data,
+  });
+
+  final HorseData data;
+
+  Widget _buildStat(int numStars, String name, BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
+    return Row(children: [
+      Container(
+        margin: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+        child: Text(
+          name,
+          style: TextStyle(
+            fontFamily: 'Zelda',
+            color: const Color.fromARGB(255, 77, 169, 255),
+            fontSize: screenSize.width / 30,
+          ),
+        ),
+      ),
+      Row(
+        children: List.generate(
+          numStars,
+          (index) => const Icon(
+            Icons.star,
+            color: Colors.yellow,
+          ),
+        ),
+      ),
+    ]);
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    return Container(
+      padding: const EdgeInsets.all(5),
+      margin: const EdgeInsets.fromLTRB(6, 3, 6, 3),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: const DecorationImage(
+              image: AssetImage('assets/white.jpg'), fit: BoxFit.cover),
+          boxShadow: const <BoxShadow>[
+            BoxShadow(
+              blurRadius: 1.0,
+              color: Color.fromARGB(100, 0, 0, 0),
+            )
+          ]),
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: const Color.fromARGB(255, 199, 162, 95),
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(3),
+            ),
+            margin: const EdgeInsets.fromLTRB(10, 10, 20, 10),
+            height: screenSize.height / 10,
+            child: Image(
+              image: NetworkImage(data.image),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                 child: Text(
                   data.name,
                   style: TextStyle(

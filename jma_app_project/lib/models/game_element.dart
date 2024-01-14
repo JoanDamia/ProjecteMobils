@@ -10,6 +10,5 @@ class GameElement {
         image = json["image"],
         id = json["id"],
         description = json["description"],
-        locations = json["common_locations"]
-  ;
+        locations = json["common_locations"];
 }
