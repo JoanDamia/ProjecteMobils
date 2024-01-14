@@ -1,52 +1,12 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_map/flutter_image_map.dart';
+import 'package:jma_app_project/api_routes/monster_api.dart';
+import 'package:jma_app_project/models/monster.dart';
 import 'package:jma_app_project/widgets/general_widgets/home_button.dart';
 import 'package:jma_app_project/widgets/general_widgets/important_tittle.dart';
 
-class MapScreen extends StatefulWidget {
-  MapScreen({Key? key}) : super(key: key);
-
-  @override
-  _MapScreenState createState() => _MapScreenState();
-}
-
-class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMixin {
-  List<Enemy> enemies = [];
-  late TransformationController _controller;
-  late AnimationController _animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TransformationController();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-    _loadEnemiesData();
-  }
-
-  Future<void> _loadEnemiesData() async {
-    try {
-      String jsonString = await DefaultAssetBundle.of(context).loadString('enemies.json');
-      dynamic decodedJson = json.decode(jsonString);
-      enemies = [];
-
-      if (decodedJson is Map<String, dynamic> && decodedJson.containsKey("monsters")) {
-        List<dynamic> monstersList = decodedJson["monsters"];
-
-        enemies = monstersList.map((json) => Enemy.fromJson(json)).toList();
-      } else {
-        print('El contenido del archivo JSON no tiene la propiedad "monsters".');
-      }
-
-      if (mounted) {
-        setState(() {});
-      }
-    } catch (e) {
-      print('Error al cargar y procesar el archivo JSON: $e');
-    }
-  }
+class MapScreen extends StatelessWidget {
+  const MapScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,118 +20,336 @@ class _MapScreenState extends State<MapScreen> with SingleTickerProviderStateMix
         automaticallyImplyLeading: false,
         title: ImportantTittle(
           screenSize: screenSize,
-          tittleName: 'MAPA',
+          tittleName: 'MAP     ',
         ),
         centerTitle: true,
         leading: const HomeButton(),
       ),
-      body: InteractiveViewer(
-        key: UniqueKey(),
-        constrained: false,
-        minScale: 0.5,
-        maxScale: 4.0,
-        transformationController: _controller,
-        child: Stack(
-          children: [
-            Image.asset('background.jpg', fit: BoxFit.cover),
-            ...enemies.map((enemy) => Positioned(
-              left: enemy.x * screenSize.width,
-              top: enemy.y * screenSize.height,
-              child: GestureDetector(
-                onTap: () {
-                  _scrollToEnemy(context, enemy);
-                },
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  child: Image.network(enemy.image),
-                ),
-              ),
-            )).toList(),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showEnemyListDialog(context);
-        },
-        child: const Icon(Icons.list),
-      ),
+      body: const InteractiveMapWidget(),
     );
-  }
-
-  void _showEnemyListDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Lista de Enemigos'),
-          content: Container(
-            width: double.maxFinite,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: enemies.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  leading: SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: Image.network(enemies[index].image),
-                  ),
-                  title: Text(enemies[index].name),
-                  subtitle: Text(enemies[index].description),
-                  onTap: () {
-                    Navigator.pop(context); // Close the dialog
-                    _scrollToEnemy(context, enemies[index]);
-                  },
-                );
-              },
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _scrollToEnemy(BuildContext context, Enemy enemy) {
-    final screenSize = MediaQuery.of(context).size;
-    final double targetTranslateX = screenSize.width / 2 - enemy.x * screenSize.width;
-    final double targetTranslateY = screenSize.height / 2 - enemy.y * screenSize.height;
-
-    _animationController.reset();
-
-    _animationController.addListener(() {
-      _controller.value = Matrix4.identity()
-        ..translate(targetTranslateX * _animationController.value,
-            targetTranslateY * _animationController.value);
-    });
-
-    _animationController.forward();
   }
 }
 
-class Enemy {
-  final String name;
-  final String description;
-  final String image;
-  final double x;
-  final double y;
+class InteractiveMapWidget extends StatefulWidget {
+  const InteractiveMapWidget({super.key});
 
-  Enemy({
-    required this.name,
-    required this.description,
-    required this.image,
-    required this.x,
-    required this.y,
+  @override
+  InteractiveMapWidgetState createState() => InteractiveMapWidgetState();
+}
+
+class InteractiveMapWidgetState extends State<InteractiveMapWidget> {
+  List<Monster>? enemyList;
+  List<String> currentMapLocations = [];
+  int currentSelectedEnemy = -1;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _loadEnemyList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (enemyList == null) { // loading
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return Stack(
+      children: [
+        InteractiveViewer(
+            constrained: false,
+            child: ImageMapWidget(locations: currentMapLocations)
+        ),
+        EnemyListWidget(
+            enemyList: enemyList!,
+            onEnemySelected: _getEnemyMapLocations,
+        ),
+      ],
+    );
+
+  }
+
+  /// DATA ///
+
+  Future<void> _loadEnemyList() async {
+    final monsters = await apiLoadMonsters();
+
+    // update and filter not valid locations
+    setState(() {
+      enemyList = monsters.where((element) => element.locations != null && element.locations!.every((element) => element is String) && element.locations!.isNotEmpty).toList();
+    });
+  }
+
+  void _getEnemyMapLocations(int index) {
+    if (index == currentSelectedEnemy) { // remove locations
+      currentSelectedEnemy = -1;
+      setState(() {
+        currentMapLocations = [];
+      });
+    }
+    else {
+      currentSelectedEnemy = index;
+      setState(() {
+        currentMapLocations = enemyList![index].locations!.cast<String>();
+      });
+    }
+  }
+}
+
+class ImageMapWidget extends StatelessWidget {
+  final List<String> locations;
+
+  static const Map<String, Offset> allLocations = {
+    'Eldin Mountains': Offset(451,87),
+    'Tabantha Frontier': Offset(135,234),
+    'Divine Beast Vah Ruta': Offset(600,279),
+    'Eldin Canyon': Offset(493,215),
+    'Divine Beast Vah Medoh': Offset(136,191),
+    'Hebra Mountains': Offset(168,100),
+    'Lanayru Great Spring': Offset(627,325),
+    'Death Mountain': Offset(550,139),
+    'Hyrule Ridge': Offset(217,292),
+    'Hyrule Field': Offset(342,358),
+    'East Necluda': Offset(553,489),
+    'Divine Beast Vah Naboris': Offset(122,507),
+    'Gerudo Desert': Offset(128,568),
+    'Gerudo Highlands': Offset(98,379),
+    'Lake Floria': Offset(496,549),
+    'Hyrule Castle': Offset(362,272),
+    'Yiga Clan Hideout': Offset(135,403),
+    'Divine Beast Vah Rudania': Offset(489,152),
+    'Akkala Highlands': Offset(616,168),
+    'West Necluda': Offset(467,424),
+    'Great Hyrule Forest': Offset(397,152),
+    'Mount Lanayru': Offset(641,400),
+    'Lake Hylia': Offset(363,475),
+    'Deep Akkala': Offset(612,96),
+  };
+
+  const ImageMapWidget({super.key, required this.locations});
+
+  ImageMapRegion _fromMapToImage(String location) {
+    Offset position;
+    if (allLocations.containsKey(location)) {
+      position = allLocations[location]!;
+    }
+    else {
+      position = const Offset(87, 191);
+    }
+    
+    return ImageMapRegion.fromCircle(center: position, radius: 20, color: const Color.fromRGBO(255, 0, 0, 0.5),);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ImageMap(
+        image: Image.asset('assets/zeldaMap.jpg'),
+        onTap: (region) {
+
+        },
+        regions: List<ImageMapRegion>.generate(locations.length, (index) => _fromMapToImage(locations[index]))
+    );
+  }
+}
+
+class EnemyListWidget extends StatefulWidget {
+  final List<Monster> enemyList;
+  final Function(int) onEnemySelected;
+
+  const EnemyListWidget({super.key, required this.enemyList, required this.onEnemySelected});
+
+  @override
+  EnemyListWidgetState createState() => EnemyListWidgetState();
+}
+
+class EnemyListWidgetState extends State<EnemyListWidget> {
+  bool _expanded = false;
+
+  Widget _collapsedBanner(Size screenSize) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const ArrowDivider(
+          dividerTitle: 'Enemy List',
+        ),
+        const Spacer(),
+        IconButton(
+          icon: Icon(_expanded ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up, color: Colors.white, size: screenSize.width / 10,),
+          onPressed: () {
+            setState(() {
+              _expanded = !_expanded;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _expandedView(Size screenSize) {
+    return Column(
+      children: [
+        _collapsedBanner(screenSize),
+        Expanded(
+            child: ListView.builder(
+              itemCount: widget.enemyList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () {
+                    widget.onEnemySelected(index);
+                    setState(() {
+                      _expanded = false;
+                    });
+                  },
+                  child: EnemyListItem(data: widget.enemyList[index]),
+                );
+              },
+            )
+        )
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
+    return Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          height: !_expanded ? screenSize.height * 0.1 : screenSize.height,
+          padding: const EdgeInsets.all(30),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            image: DecorationImage(
+                image: AssetImage('assets/black.jpg'),
+                repeat: ImageRepeat.repeat
+            ),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                blurRadius: 10.0,
+                color: Color.fromARGB(200, 0, 0, 0),
+              ),
+            ]
+          ),
+          child: _expanded ? _expandedView(screenSize) : _collapsedBanner(screenSize)
+        )
+    );
+  }
+}
+
+class ArrowDivider extends StatelessWidget {
+  const ArrowDivider({
+    super.key,
+    required this.dividerTitle,
   });
 
-  factory Enemy.fromJson(Map<String, dynamic> json) {
-    return Enemy(
-      name: json['name'] ?? '',
-      description: json['description'] ?? '',
-      image: json['image'] ?? '',
-      x: json['x'] != null ? (json['x'] as num).toDouble() : 0.0,
-      y: json['y'] != null ? (json['y'] as num).toDouble() : 0.0,
+  final String dividerTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          dividerTitle,
+          style: TextStyle(
+            fontFamily: 'Zelda',
+            fontSize: screenSize.width / 16,
+            color: Colors.white
+          ),
+        ),
+        Row(
+          children: [
+            Container(
+                width: screenSize.width * 0.4,
+                height: 3,
+                color: const Color.fromARGB(255, 172, 147, 94)
+            ),
+            SizedBox(
+              height: 5,
+              child: Transform.flip(
+                flipX: true,
+                child: const Image(
+                  image: AssetImage('assets/arrow_decoration_tip.png'),
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class EnemyListItem extends StatelessWidget {
+  const EnemyListItem({
+    super.key,
+    required this.data,
+  });
+
+  final Monster data;
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    return Container(
+      padding: const EdgeInsets.all(5),
+      margin: const EdgeInsets.fromLTRB(6, 3, 6, 3),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: const DecorationImage(
+              image: AssetImage('assets/white.jpg'), fit: BoxFit.cover),
+          boxShadow: const <BoxShadow>[
+            BoxShadow(
+              blurRadius: 1.0,
+              color: Color.fromARGB(100, 0, 0, 0),
+            )
+          ],
+
+      ),
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: const Color.fromARGB(255, 199, 162, 95),
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(3),
+            ),
+            margin: const EdgeInsets.fromLTRB(10, 10, 20, 10),
+            height: screenSize.height / 10,
+            child: Image(
+              image: NetworkImage(data.image),
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                child: Text(
+                  data.name,
+                  style: TextStyle(
+                    fontFamily: 'Zelda',
+                    color: const Color.fromARGB(255, 199, 162, 95),
+                    fontSize: screenSize.width / 20,
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

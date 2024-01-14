@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jma_app_project/api_routes/all_elements_api.dart';
 import 'package:jma_app_project/api_routes/creatures_api.dart';
-import 'package:jma_app_project/api_routes/horse_api.dart';
+
 import 'package:jma_app_project/api_routes/equipment_api.dart';
 import 'package:jma_app_project/api_routes/materials_api.dart';
 import 'package:jma_app_project/api_routes/monster_api.dart';
@@ -9,12 +9,11 @@ import 'package:jma_app_project/api_routes/treasure_api.dart';
 import 'package:jma_app_project/models/creature.dart';
 import 'package:jma_app_project/models/equipment.dart';
 import 'package:jma_app_project/models/game_element.dart';
-import 'package:jma_app_project/models/horse.dart';
 import 'package:jma_app_project/models/materials.dart';
 import 'package:jma_app_project/models/monster.dart';
 import 'package:jma_app_project/models/treasure.dart';
 import 'package:jma_app_project/widgets/compendium_widgets/list_element.dart';
-import 'package:jma_app_project/widgets/compendium_widgets/list_horse.dart';
+
 
 class ShowAllElementsList extends StatelessWidget {
   const ShowAllElementsList({super.key});
@@ -72,36 +71,7 @@ class ShowCreatureList extends StatelessWidget {
   }
 }
 
-class ShowHorseList extends StatelessWidget {
-  const ShowHorseList({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: HorseApi().loadHorses(),
-      builder: (
-          BuildContext context,
-          AsyncSnapshot<List<Map<String, dynamic>>> snapshot,
-          ) {
-        if (!snapshot.hasData) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        final horseList = snapshot.data!;
-        return ListView.builder(
-          itemCount: horseList.length,
-          itemBuilder: (BuildContext context, int index) {
-            // Crear un objeto Horse a partir de los datos del mapa
-            Horse horse = Horse.fromJson(horseList[index]);
-
-            return ListHorse(gameElement: horse);
-          },
-        );
-      },
-    );
-  }
-}
 
 class ShowEquipmentList extends StatelessWidget {
   const ShowEquipmentList({super.key});

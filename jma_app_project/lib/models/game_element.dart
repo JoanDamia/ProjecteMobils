@@ -3,16 +3,13 @@ class GameElement {
   String name;
   String image;
   String description;
+  List<dynamic>? locations;
 
   GameElement.fromJson(Map<String, dynamic> json)
       : name = json["name"],
         image = json["image"],
         id = json["id"],
-        description = json["description"];
-
-  bool matchesSearch(String search) {
-    if (name.contains(search)) return true;
-    if (description.contains(search)) return true;
-    return false;
-  }
+        description = json["description"],
+        locations = json["common_locations"]
+  ;
 }
