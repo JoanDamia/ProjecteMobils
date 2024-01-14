@@ -52,19 +52,3 @@ class RecipesScreen extends StatelessWidget {
     );
   }
 }
-
-class ListaConID extends StatefulWidget {
-  @override
-  _ListaConIDState createState() => _ListaConIDState();
-}
-
-class _ListaConIDState extends State<ListaConID> {
-  List<int> listaIDs = [];
-
-  void agregarElemento(int id) {
-    setState(() {
-      listaIDs.add(id);
-    });
-  }
- @override
-}
