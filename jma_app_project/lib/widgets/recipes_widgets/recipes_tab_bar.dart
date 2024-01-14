@@ -13,6 +13,8 @@ class RecipesTabBar extends StatelessWidget {
       length: 2, 
       child:Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: const Color.fromARGB(255, 36, 28, 26),
           bottom: const TabBar(tabs:[
             Tab(child: TabButton(recipesButtonText: "Ingredients",)),
             Tab(child: TabButton(recipesButtonText: "Crafted",)),
